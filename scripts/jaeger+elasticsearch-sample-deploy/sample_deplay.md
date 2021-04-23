@@ -69,6 +69,22 @@ docker run \
   jaegertracing/all-in-one:latest
 ```
 
+启动jaeger-allinone采用badger数据库:
+```
+docker run -d --name jaeger \
+  -e SPAN_STORAGE_TYPE=badger \
+  -e BADGER_EPHEMERAL=false \
+  -e BADGER_DIRECTORY_VALUE=/badger/data \
+  -e BADGER_DIRECTORY_KEY=/badger/key \
+  -v /Users/zl/workspace/go/src/jaeger/examples/hotrod:/badger \
+  -p 5775:5775/udp \
+  -p 6831:6831/udp \
+  -p 6832:6832/udp \
+  -p 5778:5778 \
+  -p 16686:16686 \
+  jaegertracing/all-in-one
+```
+
 * ES_SERVER_URLS 为elasticsearch的节点url
 * 6831/6832端口为用于接收应用report的tracing信息
 * 166686为jaeger-ui的服务端口
